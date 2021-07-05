@@ -1,8 +1,14 @@
 package com.yonamz.oksusu.controller;
 
+import com.yonamz.oksusu.domain.Files;
 import com.yonamz.oksusu.domain.Item;
+import com.yonamz.oksusu.service.FilesService;
 import com.yonamz.oksusu.service.ItemService;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +24,9 @@ public class ItemController {
     private final ItemService itemService;
 
     @Autowired
+    FilesService filesService;
+
+    @Autowired
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
@@ -28,8 +37,30 @@ public class ItemController {
     }
 
     @PostMapping(value = "/items/new")
-    public String register(ItemForm itemForm){
+    public String register(ItemForm itemForm, @RequestParam MultipartFile files) throws Exception {
+
         itemService.create(itemForm);
+
+        Files file = new Files();
+
+        String sourceFileName = file.getFileName();
+        File destinationFile;
+        String destinationFileName;
+        String fileUrl = "C:/spring/oksusu/src/main/resources/static/images/";
+
+        do{
+            destinationFileName = RandomStringUtils.randomAlphanumeric(32);
+            destinationFile = new File(fileUrl + destinationFileName);
+        } while (destinationFile.exists());
+
+        destinationFile.getParentFile().mkdirs();
+        files.transferTo(destinationFile);
+
+        file.setFileName(destinationFileName);
+        file.setFileUrl(fileUrl);
+        filesService.save(file);
+
+
         return "redirect:/";
     }
 
@@ -43,8 +74,9 @@ public class ItemController {
     @GetMapping("/items/{item_no}")
     public String detail(@PathVariable("item_no") Long item_no, Model model){
         ItemForm itemForm = itemService.getPost(item_no);
-
+        /*Files files = filesService.findByItemNo(item_no);*/
         model.addAttribute("itemForm",itemForm);
+        /*model.addAttribute("file", files);*/
         return "items/detail";
     }
 

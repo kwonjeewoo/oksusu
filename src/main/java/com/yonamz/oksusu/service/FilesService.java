@@ -22,4 +22,9 @@ public class FilesService {
         Files file = filesRepository.findByFno(i);
         return file;
     }
+
+    /*public Files findByItemNo(Long item_no) {
+        Files file = filesRepository.findByItemNo(item_no);
+        return file;
+    }*/
 }

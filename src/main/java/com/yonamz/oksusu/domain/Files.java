@@ -13,7 +13,7 @@ public class Files {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int fno;
-
     String fileName;
     String fileUrl;
+    Long item_no;
 }

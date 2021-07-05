@@ -31,13 +31,12 @@ public class ItemForm {
                 .starting_bid(starting_bid)
                 .deadline(deadline)
                 .reg_date(reg_date)
-                .picture_url(picture_url)
                 .build();
         return build;
     }
 
     @Builder
-    public ItemForm(long item_no, String writer, String title, String content, Date deadline, int starting_bid, Timestamp reg_date, String picture_url) {
+    public ItemForm(long item_no, String writer, String title, String content, Date deadline, int starting_bid, Timestamp reg_date) {
         this.item_no = item_no;
         this.writer = writer;
         this.title = title;
@@ -45,6 +44,5 @@ public class ItemForm {
         this.deadline = deadline;
         this.starting_bid = starting_bid;
         this.reg_date=reg_date;
-        this.picture_url=picture_url;
     }
 }
