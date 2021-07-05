@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:decorator="~{layouts/layout}">
+<title>home</title>
 <body>
+<th:block layout:fragment="content">
 <div class="container">
     <div>
         <h1>상품 등록/조회</h1>
@@ -10,5 +14,6 @@
         </p>
     </div>
 </div>
+</th:block>
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.yonamz.oksusu.domain.Item;
 import lombok.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Getter
@@ -18,7 +19,8 @@ public class ItemForm {
     private String content;
     private Date deadline;
     private int starting_bid;
-    private LocalDate reg_date;
+    private Timestamp reg_date;
+    private String picture_url;
 
     public Item toEntity(){
         Item build = Item.builder()
@@ -28,13 +30,14 @@ public class ItemForm {
                 .content(content)
                 .starting_bid(starting_bid)
                 .deadline(deadline)
-                .reg_date(LocalDate.now())
+                .reg_date(reg_date)
+                .picture_url(picture_url)
                 .build();
         return build;
     }
 
     @Builder
-    public ItemForm(long item_no, String writer, String title, String content, Date deadline, int starting_bid, LocalDate reg_date) {
+    public ItemForm(long item_no, String writer, String title, String content, Date deadline, int starting_bid, Timestamp reg_date, String picture_url) {
         this.item_no = item_no;
         this.writer = writer;
         this.title = title;
@@ -42,5 +45,6 @@ public class ItemForm {
         this.deadline = deadline;
         this.starting_bid = starting_bid;
         this.reg_date=reg_date;
+        this.picture_url=picture_url;
     }
 }
