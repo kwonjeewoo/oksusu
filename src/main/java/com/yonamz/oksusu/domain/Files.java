@@ -15,5 +15,5 @@ public class Files {
     int fno;
     String fileName;
     String fileUrl;
-    Long item_no;
+    long itemNo;
 }

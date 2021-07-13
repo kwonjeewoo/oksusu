@@ -16,7 +16,12 @@
                         <span th:text="${item.writer}"> </span>
                     </a>
                 </td>
-                <td th:text="${item.title}" th:href="@{'/items/'+${item.item_no}}"></td>
+                <td>
+                    <a th:href="@{'/items/'+${item.item_no}}">
+                        <span th:text="${item.content}"></span>
+                    </a>
+                    <!--<td th:text="${item.title}" th:href="@{'/items/'+${item.item_no}}">-->
+                </td>
                 <td><textarea th:text="${item.content}"></textarea></td>
                 <td th:text="${item.deadline}"></td>
                 <td th:text="${item.starting_bid}"></td>

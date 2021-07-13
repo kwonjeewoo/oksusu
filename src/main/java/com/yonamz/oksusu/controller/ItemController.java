@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ItemController {
@@ -37,7 +39,7 @@ public class ItemController {
     }
 
     @PostMapping(value = "/items/new")
-    public String register(ItemForm itemForm, @RequestParam MultipartFile files) throws Exception {
+    public String register(ItemForm itemForm, @RequestParam MultipartFile files, RedirectAttributes redirectAttributes) throws Exception {
 
         itemService.create(itemForm);
 
@@ -58,9 +60,20 @@ public class ItemController {
 
         file.setFileName(destinationFileName);
         file.setFileUrl(fileUrl);
-        filesService.save(file);
+        file.setItemNo(itemForm.getItem_no()); //여기가 문제인가?
 
+        redirectAttributes.addFlashAttribute("file",file);
 
+        return "redirect:/items/files";
+    }
+
+    @PostMapping("/items/files") //안된다.
+    public String register(@RequestParam("file") Files file){
+        /*try {
+            filesService.save(file);
+        } catch (NumberFormatException e){
+            System.out.println("java.lang.NumberFormatException 발생");
+        }*/
         return "redirect:/";
     }
 
@@ -74,9 +87,9 @@ public class ItemController {
     @GetMapping("/items/{item_no}")
     public String detail(@PathVariable("item_no") Long item_no, Model model){
         ItemForm itemForm = itemService.getPost(item_no);
-        /*Files files = filesService.findByItemNo(item_no);*/
+        Files files = filesService.findByItemNo(item_no);
         model.addAttribute("itemForm",itemForm);
-        /*model.addAttribute("file", files);*/
+        model.addAttribute("file", files);
         return "items/detail";
     }
 

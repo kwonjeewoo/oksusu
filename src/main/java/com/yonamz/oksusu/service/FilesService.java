@@ -14,6 +14,7 @@ public class FilesService {
         Files file = new Files();
         file.setFileName(files.getFileName());
         file.setFileUrl(files.getFileUrl());
+        file.setItemNo(files.getItemNo());
 
         filesRepository.save(file);
     }
@@ -23,8 +24,8 @@ public class FilesService {
         return file;
     }
 
-    /*public Files findByItemNo(Long item_no) {
+    public Files findByItemNo(Long item_no) {
         Files file = filesRepository.findByItemNo(item_no);
         return file;
-    }*/
+    }
 }
